@@ -1,12 +1,11 @@
 # TextIndexer
 
-/***********************************************
-*    Title: Words Search Application           *
-*    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: June 16th, 2017                     *
-*    Code version: 0.1                         *
-*    Availability: Public                      *
-***********************************************/
+*    Title: Words Search Application          
+*    Author: Guillem Nicolau Alomar Sitjes      
+*    Date: June 16th, 2017                     
+*    Code version: 0.1                         
+*    Availability: Public                      
+
 
 Just a text indexer for fast text searches. Similar to a grep,
 but for several words at the same time, giving an ordered list
