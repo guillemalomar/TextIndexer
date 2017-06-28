@@ -17,3 +17,6 @@ For a bigger dataset, it might give memory problems. In this
 case, an implementation to save the temporal data in disk
 would be better. A parallel implementation would also be better
 in that case, for a better performance.
+
+The 'IndexableDirectory' folder only contains some small files
+used for testing.
