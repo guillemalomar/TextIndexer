@@ -1,9 +1,9 @@
 /***********************************************
 *    Title: Words Search Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: June 16th, 2017                     *
+*    Creation Date: June 16th, 2017            *
 *    Code version: 0.1                         *
-*    Availability: Private                     *
+*    Availability: Public                      *
 ***********************************************/
 package textindexer;
 
