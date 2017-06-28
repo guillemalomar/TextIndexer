@@ -21,7 +21,7 @@ public class TextIndexer {
      *    String line: a text line containing words.
 	 */
     public static String[] splitLine(String line){
-        return line.split(",|\\:|-|\\.|\\ ");
+        return line.split(";|,|\\:|-|\\.|\\ ");
     }
 
 	/** 
