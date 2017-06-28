@@ -14,6 +14,7 @@ each file.
 
 The code is really simple to use. Just compile it like this:
     javac Main.java
+If you prefer to use Maven, you have the pom.xml that I used.
 
 And run it like this:
     java Main DirectoryOfFiles
