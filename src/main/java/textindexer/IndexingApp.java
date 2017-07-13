@@ -12,21 +12,33 @@ import java.io.*;
 
 public class IndexingApp{
 
+    private static long startTime = 9999999999L;
+    private static long stopTime = 9999999999L;
+
 	/** 
 	 * Main application method
 	 */
     public static void main(String[] args) {
         clearScreen();
+        String folder_path = new String();
         if(args.length == 0) {
-            throw new IllegalArgumentException("No directory given to index.");
+            // Here a log warning will be needed to warn the user that
+            // the default files folder is being used.
+            //throw new IllegalArgumentException("No directory given to index.");
+            folder_path = System.getProperty("user.dir") + "/IndexableDirectory";
+        }else{
+            folder_path = System.getProperty("user.dir") + "/" + args[0];
         }
 
         startingApplication();
-
-        final File indexableDirectory = new File(args[0]);
+        System.out.println("----------------------------");
         System.out.println("Indexing files...");
-        textindexer.TextIndexer.text_indexer(indexableDirectory, args);
-        System.out.println("Done!");
+        startTime();
+        final File indexableDirectory = new File(folder_path);
+        File[] listOfFiles = indexableDirectory.listFiles();
+        textindexer.TextIndexer.text_indexer(listOfFiles, folder_path);
+        finishTime();
+        System.out.println("Done in " + getTime() + "ms!");
         System.out.println("----------------------------");
         
         Scanner keyboard = new Scanner(System.in);
@@ -34,11 +46,37 @@ public class IndexingApp{
             System.out.print("search> ");
             final String line = keyboard.nextLine();
             exitCondition(line);
+            startTime();
             String[] search = textindexer.TextIndexer.splitLine(line);
             exitCondition(line);
             textindexer.TextIndexer.word_finder(search);
+            finishTime();
+            System.out.println("Done in " + getTime() + "ms!");
             System.out.println("----------------------------");
         }
+    }
+
+    /**
+     * Saves the starting timer
+     */
+    private static void startTime(){
+        startTime = System.currentTimeMillis();
+    }
+
+    /**
+     * Saves the finish timer
+     */
+    private static void finishTime(){
+        stopTime = System.currentTimeMillis();
+    }
+
+    /**
+     * Returns the elapsed time
+     * Output:
+     *    long : elapsed time between start and finish
+     */
+    private static long getTime(){
+        return stopTime - startTime;
     }
 
 	/** 
