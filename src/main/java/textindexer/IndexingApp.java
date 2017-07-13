@@ -15,9 +15,9 @@ public class IndexingApp{
     private static long startTime = 9999999999L;
     private static long stopTime = 9999999999L;
 
-	/** 
-	 * Main application method
-	 */
+    /** 
+     * Main application method
+     */
     public static void main(String[] args) {
         clearScreen();
         String folder_path = new String();
@@ -79,19 +79,19 @@ public class IndexingApp{
         return stopTime - startTime;
     }
 
-	/** 
-	 * Just for visualizing purposes, cleans the terminal at the 
+    /** 
+     * Just for visualizing purposes, cleans the terminal at the 
      * beginning of the execution.
-	 */
-	private static void clearScreen() {  
-		System.out.print("\033[H\033[2J");  
-		System.out.flush();  
+     */
+    private static void clearScreen() {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
     }
 
-	/** 
-	 * This prints the application information at the
+    /** 
+     * This prints the application information at the
      * beginning of the execution.
-	 */
+     */
     private static void startingApplication(){
         System.out.println("****************************\n* Words Search Application *\n****************************");
         System.out.println("This application lets you search for specific words in all files in");
@@ -99,11 +99,11 @@ public class IndexingApp{
         System.out.println("can be found (in case that the words are found).\nWrite ':quit' to exit.");
     }
 
-	/** 
-	 * This checks if the user wants to finish the execution.
+    /** 
+     * This checks if the user wants to finish the execution.
      * Input:
      *    String line: user input line of words
-	 */
+     */
     private static void exitCondition(String line){
         if(line.equals(":quit")){
             System.out.println("Exiting application");
