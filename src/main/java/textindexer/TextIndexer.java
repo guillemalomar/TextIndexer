@@ -29,16 +29,16 @@ public class TextIndexer {
      * in our data structure.
      * Input:
      *    File[] listOfFiles: list of the files in the files directory.
-     *    String[] args: the application parameters.
+     *    String folder_path: the path to the files directory.
 	 */
-    public static void text_indexer(File[] listOfFiles, String args){
+    public static void text_indexer(File[] listOfFiles, String folder_path){
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 textindexer.TextIndexer.fileWords.put(listOfFiles[i].getName(), new HashSet<>());
                 BufferedReader br = null;
 				try {
-				    br = new BufferedReader(new FileReader("/" + args + "/" + listOfFiles[i].getName()));
+				    br = new BufferedReader(new FileReader("/" + folder_path + "/" + listOfFiles[i].getName()));
 					String line = br.readLine();
 
 					while (line != null) {
@@ -61,7 +61,7 @@ public class TextIndexer {
                     }
 				}
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println(textindexer.TextIndexer.fileWords.size() + " files read in directory " + args);
+                System.out.println(textindexer.TextIndexer.fileWords.size() + " files read in directory " + folder_path);
             }
         }
     }
