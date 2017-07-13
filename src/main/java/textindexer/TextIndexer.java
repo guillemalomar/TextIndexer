@@ -28,19 +28,17 @@ public class TextIndexer {
 	 * The text_indexer method stores a hashcode of every word
      * in our data structure.
      * Input:
-     *    File indexableDirectory: the path to the files directory.
+     *    File[] listOfFiles: list of the files in the files directory.
      *    String[] args: the application parameters.
 	 */
-    public static void text_indexer(File indexableDirectory, String[] args){
-
-        File[] listOfFiles = indexableDirectory.listFiles();
+    public static void text_indexer(File[] listOfFiles, String args){
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 textindexer.TextIndexer.fileWords.put(listOfFiles[i].getName(), new HashSet<>());
                 BufferedReader br = null;
 				try {
-				    br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/" + args[0] + "/" + listOfFiles[i].getName()));
+				    br = new BufferedReader(new FileReader("/" + args + "/" + listOfFiles[i].getName()));
 					String line = br.readLine();
 
 					while (line != null) {
@@ -63,7 +61,7 @@ public class TextIndexer {
                     }
 				}
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println(textindexer.TextIndexer.fileWords.size() + " files read in directory " + args[0]);
+                System.out.println(textindexer.TextIndexer.fileWords.size() + " files read in directory " + args);
             }
         }
     }
