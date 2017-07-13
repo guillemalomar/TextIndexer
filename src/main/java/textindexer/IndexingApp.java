@@ -12,8 +12,8 @@ import java.io.*;
 
 public class IndexingApp{
 
-    private static long startTime = System.currentTimeMillis();
-    private static long stopTime = System.currentTimeMillis();
+    private static long startTime = 9999999999L;
+    private static long stopTime = 9999999999L;
 
 	/** 
 	 * Main application method
