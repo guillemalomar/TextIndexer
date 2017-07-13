@@ -9,24 +9,28 @@ package textindexer;
 
 import java.util.*;
 import java.io.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class IndexingApp{
 
     private static long startTime = 9999999999L;
     private static long stopTime = 9999999999L;
 
+    private final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
+
     /** 
      * Main application method
      */
     public static void main(String[] args) {
+        LOGGER.setLevel(Level.WARNING);
         clearScreen();
-        String folder_path = new String();
+        String folder_path;
         if(args.length == 0) {
-            // Here a log warning will be needed to warn the user that
-            // the default files folder is being used.
-            //throw new IllegalArgumentException("No directory given to index.");
+            LOGGER.info("Using default indexable files directory: IndexableDirectory");
             folder_path = System.getProperty("user.dir") + "/IndexableDirectory";
         }else{
+            LOGGER.info("Using specified indexable files directory: " + args[0]);
             folder_path = System.getProperty("user.dir") + "/" + args[0];
         }
 
@@ -36,6 +40,7 @@ public class IndexingApp{
         startTime();
         final File indexableDirectory = new File(folder_path);
         File[] listOfFiles = indexableDirectory.listFiles();
+        LOGGER.info("Number of files found: " + listOfFiles.length);
         textindexer.TextIndexer.text_indexer(listOfFiles, folder_path);
         finishTime();
         System.out.println("Done in " + getTime() + "ms!");
