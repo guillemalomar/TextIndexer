@@ -1,19 +1,18 @@
 /***********************************************
 *    Title: Words Search Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: June 16th, 2017                     *
+*    Date: July 14th, 2017                     *
 *    Code version: 0.1                         *
 *    Availability: Public                      *
 ***********************************************/
 package textindexer;
 
 import java.util.*;
-import java.io.*;
 
 public class Timer {
 
-    private static long startTime = 9999999999L;
-    private static long stopTime = 9999999999L;
+    private static long startTime = 9999999999L;  // Value just to initialize
+    private static long stopTime = 9999999999L;   // Value just to initialize
 
     /**
      * Saves the starting timer
