@@ -41,7 +41,7 @@ public class IndexingApp{
         LOGGER.info("Number of files found: " + listOfFiles.length);
         textindexer.TextIndexer.text_indexer(listOfFiles, folder_path);
         timer.finishTime();
-        System.out.println("Done in " + timer.getTime() + "ms!");
+        System.out.println("Done in " + timer.getTime() + "s!");
         System.out.println("----------------------------");
         
         Scanner keyboard = new Scanner(System.in);
@@ -53,7 +53,7 @@ public class IndexingApp{
             String[] search = textindexer.TextIndexer.splitLine(line);
             textindexer.TextIndexer.word_finder(search);
             timer.finishTime();
-            System.out.println("Done in " + timer.getTime() + "ms!");
+            System.out.println("Done in " + timer.getTime() + "s!");
             System.out.println("----------------------------");
         }
     }

@@ -9,8 +9,6 @@ package textindexer;
 
 import java.util.*;
 import java.io.*;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class Timer {
 
@@ -34,9 +32,10 @@ public class Timer {
     /**
      * Returns the elapsed time
      * Output:
-     *    long : elapsed time between start and finish
+     *    long : elapsed time between start and finish in seconds
      */
-    static long getTime(){
-        return stopTime - startTime;
+    static double getTime(){
+        long elapsedTime = stopTime - startTime;
+        return (double)elapsedTime / (double)1000.0;
     }
 }
