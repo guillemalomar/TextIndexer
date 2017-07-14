@@ -14,9 +14,7 @@ import java.util.logging.Level;
 
 public class IndexingApp{
 
-    private static long startTime = 9999999999L;
-    private static long stopTime = 9999999999L;
-
+    private final static Timer timer = new Timer();
     private final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
 
     /** 
@@ -37,13 +35,13 @@ public class IndexingApp{
         startingApplication();
         System.out.println("----------------------------");
         System.out.println("Indexing files...");
-        startTime();
+        timer.startTime();
         final File indexableDirectory = new File(folder_path);
         File[] listOfFiles = indexableDirectory.listFiles();
         LOGGER.info("Number of files found: " + listOfFiles.length);
         textindexer.TextIndexer.text_indexer(listOfFiles, folder_path);
-        finishTime();
-        System.out.println("Done in " + getTime() + "ms!");
+        timer.finishTime();
+        System.out.println("Done in " + timer.getTime() + "s!");
         System.out.println("----------------------------");
         
         Scanner keyboard = new Scanner(System.in);
@@ -51,37 +49,13 @@ public class IndexingApp{
             System.out.print("search> ");
             final String line = keyboard.nextLine();
             exitCondition(line);
-            startTime();
+            timer.startTime();
             String[] search = textindexer.TextIndexer.splitLine(line);
-            exitCondition(line);
             textindexer.TextIndexer.word_finder(search);
-            finishTime();
-            System.out.println("Done in " + getTime() + "ms!");
+            timer.finishTime();
+            System.out.println("Done in " + timer.getTime() + "s!");
             System.out.println("----------------------------");
         }
-    }
-
-    /**
-     * Saves the starting timer
-     */
-    private static void startTime(){
-        startTime = System.currentTimeMillis();
-    }
-
-    /**
-     * Saves the finish timer
-     */
-    private static void finishTime(){
-        stopTime = System.currentTimeMillis();
-    }
-
-    /**
-     * Returns the elapsed time
-     * Output:
-     *    long : elapsed time between start and finish
-     */
-    private static long getTime(){
-        return stopTime - startTime;
     }
 
     /** 
