@@ -10,4 +10,4 @@ export PATH=$M2:$PATH
 mvn assembly::assembly
 
 #maven execute
-mvn exec:java -Dexec.mainClass="textindexer.TextIndexer"
+mvn exec:java -Dexec.mainClass="textindexer.IndexingApp"
