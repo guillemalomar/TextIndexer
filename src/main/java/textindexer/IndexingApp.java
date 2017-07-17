@@ -14,6 +14,7 @@ import java.util.logging.Level;
 
 public class IndexingApp{
 
+    private static String mode = "0";
     private final static Timer timer = new Timer();
     private final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
 
@@ -32,14 +33,25 @@ public class IndexingApp{
             folder_path = System.getProperty("user.dir") + "/" + args[0];
         }
 
+        boolean ready = false;
         startingApplication();
+        while(!ready) {
+            Scanner keyboard = new Scanner(System.in);
+            String line = keyboard.nextLine();
+            exitCondition(line);
+            ready = check_mode(line);
+        }
         System.out.println("----------------------------");
         System.out.println("Indexing files...");
         timer.startTime();
         final File indexableDirectory = new File(folder_path);
         File[] listOfFiles = indexableDirectory.listFiles();
         LOGGER.info("Number of files found: " + listOfFiles.length);
-        textindexer.TextIndexer.text_indexer(listOfFiles, folder_path);
+        if(mode.equals("1")) {
+            textindexer.TextIndexer.text_indexer_by_file(listOfFiles, folder_path);
+        } else {
+            textindexer.TextIndexer.text_indexer_by_word(listOfFiles, folder_path);
+        }
         timer.finishTime();
         System.out.println("Done in " + timer.getTime() + "s!");
         System.out.println("----------------------------");
@@ -51,7 +63,7 @@ public class IndexingApp{
             exitCondition(line);
             timer.startTime();
             String[] search = textindexer.TextIndexer.splitLine(line);
-            textindexer.TextIndexer.word_finder(search);
+            textindexer.TextIndexer.word_finder(search, mode);
             timer.finishTime();
             System.out.println("Done in " + timer.getTime() + "s!");
             System.out.println("----------------------------");
@@ -76,6 +88,7 @@ public class IndexingApp{
         System.out.println("This application lets you search for specific words in all files in");
         System.out.println("a given directory, showing the file/files where most of the words");
         System.out.println("can be found (in case that the words are found).\nWrite ':quit' to exit.");
+        System.out.println("First, choose and indexing method:\n1)Index by file\n2)Index by word");
     }
 
     /** 
@@ -89,6 +102,15 @@ public class IndexingApp{
             System.out.println("****************************");
             clearScreen();
             System.exit(0);
+        }
+    }
+
+    private static boolean check_mode(String line){
+        if(line.equals("1") || line.equals("2")){
+            mode = line;
+            return true;
+        } else {
+            return false;
         }
     }
 }

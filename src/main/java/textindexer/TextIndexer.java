@@ -15,6 +15,7 @@ import java.util.logging.Level;
 public class TextIndexer {
 
     private static Map<String, HashSet<Integer>> fileWords = new HashMap<>();
+    private static Map<String, HashSet<String>> wordFiles = new HashMap<>();
 
     private final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
 
@@ -29,13 +30,13 @@ public class TextIndexer {
     }
 
     /** 
-     * The text_indexer method stores a hashcode of every word
+     * The text_indexer_by_file method stores a hashcode of every word
      * in our data structure.
      * Input:
      *    File[] listOfFiles: list of the files in the files directory.
      *    String folder_path: the path to the files directory.
      */
-     static void text_indexer(File[] listOfFiles, String folder_path){
+     static void text_indexer_by_file(File[] listOfFiles, String folder_path){
         LOGGER.setLevel(Level.WARNING);
         int words_in_file;
         for (File file : listOfFiles) {
@@ -72,7 +73,54 @@ public class TextIndexer {
             }
         }
     }
-    
+
+    /**
+     * The text_indexer_by_file method stores a hashcode of every word
+     * in our data structure.
+     * Input:
+     *    File[] listOfFiles: list of the files in the files directory.
+     *    String folder_path: the path to the files directory.
+     */
+    static void text_indexer_by_word(File[] listOfFiles, String folder_path){
+        LOGGER.setLevel(Level.WARNING);
+        int words_in_file;
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader("/" + folder_path + "/" + file.getName()));
+                    String line = br.readLine();
+                    words_in_file = 0;
+                    while (line != null) {
+                        String[] split = splitLine(line);
+                        for (String word: split) {
+                            if(!TextIndexer.wordFiles.containsKey(word)){
+                                TextIndexer.wordFiles.put(word, new HashSet<>());
+                            }
+                            file_indexer(word, file.getName());
+                            words_in_file++;
+                        }
+                        line = br.readLine();
+                    }
+                    LOGGER.info("Number of words in file " + file.getName() + ":" + words_in_file);
+                } catch(FileNotFoundException e) {
+                    LOGGER.warning("Error opening file:" + e);
+                } catch(IOException e) {
+                    LOGGER.warning("Error reading line:" + e);
+                }
+                finally {
+                    try{
+                        br.close();
+                    } catch(IOException e1) {
+                        LOGGER.warning("Error closing file:" + e1);
+                    }
+                }
+            } else if (file.isDirectory()) {
+                System.out.println(textindexer.TextIndexer.fileWords.size() + " files read in directory " + folder_path);
+            }
+        }
+    }
+
     /** 
      * The word_indexer method stores a hashcode of every word
      * in our data structure.
@@ -84,6 +132,18 @@ public class TextIndexer {
         fileWords.get(file).add((word.hashCode()));
     }
 
+    /**
+     * The file_indexer method stores the files where a word appears
+     * in our data structure.
+     * Input:
+     *    String word: the word that we want to index in our structure.
+     *    String file: the path to the file where the word comes from.
+     */
+    private static void file_indexer(String word, String file){
+        wordFiles.get(word).add(file);
+    }
+
+
     /** 
      * The word_finder method implements the search in our data
      * structure, printing in the screen the most relevant
@@ -91,39 +151,57 @@ public class TextIndexer {
      * Input:
      *    String[] search: user input line of words.
      */
-    static void word_finder(String[] search){
+    static void word_finder(String[] search, String mode){
         HashMap<String, Double> words_found = new HashMap<>();
         double numWords = (double) search.length;
         Boolean found = false;
-        for (Map.Entry<String, HashSet<Integer>> entry : fileWords.entrySet()){
-            for (String word: search) {
-                if(entry.getValue().contains(word.hashCode())){
-                    found = true;
-                    if(words_found.containsKey(entry.getKey())){
-                        words_found.put(entry.getKey(), 1.00 + words_found.get(entry.getKey()));
-                    }else{
-                        words_found.put(entry.getKey(), 1.00);
+        if(mode.equals("1")){
+            for (Map.Entry<String, HashSet<Integer>> entry : fileWords.entrySet()) {
+                for (String word : search) {
+                    if (entry.getValue().contains(word.hashCode())) {
+                        found = true;
+                        if (words_found.containsKey(entry.getKey())) {
+                            words_found.put(entry.getKey(), 1.00 + words_found.get(entry.getKey()));
+                        } else {
+                            words_found.put(entry.getKey(), 1.00);
+                        }
+                    }
+                }
+                if (!words_found.containsKey(entry.getKey())) {
+                    words_found.put(entry.getKey(), 0.00);
+                }
+            }
+        } else {
+            for (Map.Entry<String, HashSet<String>> entry : wordFiles.entrySet()) {
+                for (String word : search) {
+                    if (entry.getKey().equals(word)) {
+                        found = true;
+                        for (String file : entry.getValue()){
+                            if (words_found.containsKey(file)) {
+                                words_found.put(file, 1.00 + words_found.get(file));
+                            } else {
+                                words_found.put(file, 1.00);
+                            }
+                        }
                     }
                 }
             }
-            if(!words_found.containsKey(entry.getKey())){
-                words_found.put(entry.getKey(), 0.00);
-            }
+
         }
         if(found){
             int processed = 0;
             List<String> processedFiles = new ArrayList<>();
             Double max = 0.0;
             String maxFile = "";
-            while((processed < words_found.size()) && (processed < 10)){ //until all relevant files have been processed, up to a maximum of 10
-                for(Map.Entry<String, Double> entry : words_found.entrySet()){
-                    if((entry.getValue() >= max) && (!processedFiles.contains(entry.getKey()))){
+            while((processed < words_found.size()) && (processed < 10)) { //until all relevant files have been processed, up to a maximum of 10
+                for (Map.Entry<String, Double> entry : words_found.entrySet()) {
+                    if ((entry.getValue() >= max) && (!processedFiles.contains(entry.getKey()))) {
                         max = entry.getValue();   //This is done in order to show the results in descending order.
                         maxFile = entry.getKey(); //Current max value and it's file are saved.
                     }
                 }
                 System.out.println(maxFile + " : " + max/numWords*100 + "%");
-                processedFiles.add(maxFile); //so that we just 
+                processedFiles.add(maxFile); //so that we just
                 processed++;
                 max = 0.0;
                 maxFile = "";
