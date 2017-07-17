@@ -1,7 +1,7 @@
 /***********************************************
 *    Title: Words Search Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: June 16th, 2017                     *
+*    Date: June 17th, 2017                     *
 *    Code version: 0.1                         *
 *    Availability: Public                      *
 ***********************************************/
@@ -32,9 +32,8 @@ public class IndexingApp{
             LOGGER.info("Using specified indexable files directory: " + args[0]);
             folder_path = System.getProperty("user.dir") + "/" + args[0];
         }
-
-        boolean ready = false;
         startingApplication();
+        boolean ready = false;
         while(!ready) {
             Scanner keyboard = new Scanner(System.in);
             String line = keyboard.nextLine();
@@ -105,11 +104,19 @@ public class IndexingApp{
         }
     }
 
+    /**
+     * This checks if the mode chosen by the user is available.
+     * Input:
+     *    String line: user input line
+     * Output:
+     *    boolean: true if valid / false if not
+     */
     private static boolean check_mode(String line){
         if(line.equals("1") || line.equals("2")){
             mode = line;
             return true;
         } else {
+            System.out.println("Please, specify an existing method");
             return false;
         }
     }

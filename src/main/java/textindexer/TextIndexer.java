@@ -1,7 +1,7 @@
 /***********************************************
 *    Title: Words Search Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: June 16th, 2017                     *
+*    Date: June 17th, 2017                     *
 *    Code version: 0.1                         *
 *    Availability: Public                      *
 ***********************************************/
@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-public class TextIndexer {
+class TextIndexer {
 
     private static Map<String, HashSet<Integer>> fileWords = new HashMap<>();
     private static Map<String, HashSet<String>> wordFiles = new HashMap<>();
@@ -75,8 +75,8 @@ public class TextIndexer {
     }
 
     /**
-     * The text_indexer_by_file method stores a hashcode of every word
-     * in our data structure.
+     * The text_indexer_by_word method stores the list of files where
+     * a word can be found, in our data structure.
      * Input:
      *    File[] listOfFiles: list of the files in the files directory.
      *    String folder_path: the path to the files directory.
@@ -142,7 +142,6 @@ public class TextIndexer {
     private static void file_indexer(String word, String file){
         wordFiles.get(word).add(file);
     }
-
 
     /** 
      * The word_finder method implements the search in our data
