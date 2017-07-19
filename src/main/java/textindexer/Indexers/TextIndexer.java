@@ -17,19 +17,37 @@ import java.util.logging.Logger;
 
 public class TextIndexer {
 
-    public final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
-    public final static textindexer.Tools.Timer timer = new textindexer.Tools.Timer();
+    final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
+    final static textindexer.Tools.Timer timer = new textindexer.Tools.Timer();
+
     /**
      * This method returns a string array with the words found
      * in a given line, splitted by the most common word delimiters.
      * Input:
-     * String line: a text line containing words.
+     *     - String line: a text line containing words.
      */
     public static String[] splitLine(String line) {
         return line.split(";|,|\\:|-|\\.|\\ ");
     }
 
-    public static void visualize_results(HashMap<String, Double> words_found, double numWords){
+
+    static void increase_position(String file, HashMap<String, Double> words_found){
+        if (words_found.containsKey(file)) {
+            words_found.put(file, 1.00 + words_found.get(file));
+        } else {
+            words_found.put(file, 1.00);
+        }
+    }
+
+    /**
+     * This method prints an ordered list of the top ten files that contain at
+     * least one word of the search.
+     * Input:
+     *     - HashMap<String, Double> words_found: a map with all the files
+     *     followed by the number of words of the search that contain.
+     *     - double numWords: total words of the search
+     */
+    static void visualize_results(HashMap<String, Double> words_found, double numWords){
         int processed = 0;
         List<String> processedFiles = new ArrayList<>();
         Double max = 0.0;

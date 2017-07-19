@@ -38,7 +38,7 @@ public class Timer {
 
     public static void totalTime(){
         finishTime();
-        System.out.println("Done in " + getTime() + "s!");
+        System.out.println("Done in " + getTime() + "s");
         System.out.println("----------------------------");
     }
 }

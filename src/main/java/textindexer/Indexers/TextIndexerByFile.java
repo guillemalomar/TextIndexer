@@ -19,8 +19,8 @@ public class TextIndexerByFile extends TextIndexer{
      * The text_indexer_by_file method stores a hashcode of every word
      * in our data structure.
      * Input:
-     * File[] listOfFiles: list of the files in the files directory.
-     * String folder_path: the path to the files directory.
+     *     - File[] listOfFiles: list of the files in the files directory.
+     *     - String folder_path: the path to the files directory.
      */
     public static void text_indexer_by_file(File[] listOfFiles, String folder_path) {
         System.out.println("----------------------------");
@@ -67,8 +67,8 @@ public class TextIndexerByFile extends TextIndexer{
      * The word_indexer method stores a hashcode of every word
      * in our data structure.
      * Input:
-     * String file: the path to the file where the word comes from.
-     * String word: the word that we want to index in our structure.
+     *     - String file: the path to the file where the word comes from.
+     *     - String word: the word that we want to index in our structure.
      */
     private static void word_indexer(String file, String word) {
         fileWords.get(file).add((word.hashCode()));
@@ -79,7 +79,7 @@ public class TextIndexerByFile extends TextIndexer{
      * structure, printing in the screen the most relevant
      * files to the search.
      * Input:
-     * String[] search: user input line of words.
+     *     - String[] search: user input line of words.
      */
     public static void word_finder(String[] search) {
         System.out.println("----------------------------");
@@ -92,11 +92,7 @@ public class TextIndexerByFile extends TextIndexer{
             for (String word : search) {
                 if (entry.getValue().contains(word.hashCode())) {
                     found = true;
-                    if (words_found.containsKey(entry.getKey())) {
-                        words_found.put(entry.getKey(), 1.00 + words_found.get(entry.getKey()));
-                    } else {
-                        words_found.put(entry.getKey(), 1.00);
-                    }
+                    TextIndexer.increase_position(entry.getKey(), words_found);
                 }
             }
         }

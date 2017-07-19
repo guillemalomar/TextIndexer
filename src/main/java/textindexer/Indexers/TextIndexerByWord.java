@@ -13,14 +13,14 @@ import java.util.logging.Level;
 
 public class TextIndexerByWord extends TextIndexer{
 
-    public static Map<String, HashSet<String>> wordFiles = new HashMap<>();
+    private static Map<String, HashSet<String>> wordFiles = new HashMap<>();
 
     /**
      * The text_indexer_by_word method stores the list of files where
      * a word can be found, in our data structure.
      * Input:
-     * File[] listOfFiles: list of the files in the files directory.
-     * String folder_path: the path to the files directory.
+     *     - File[] listOfFiles: list of the files in the files directory.
+     *     - String folder_path: the path to the files directory.
      */
     public static void text_indexer_by_word(File[] listOfFiles, String folder_path) {
         System.out.println("----------------------------");
@@ -69,8 +69,8 @@ public class TextIndexerByWord extends TextIndexer{
      * The file_indexer method stores the files where a word appears
      * in our data structure.
      * Input:
-     * String word: the word that we want to index in our structure.
-     * String file: the path to the file where the word comes from.
+     *     - String word: the word that we want to index in our structure.
+     *     - String file: the path to the file where the word comes from.
      */
     private static void file_indexer(String word, String file) {
         wordFiles.get(word).add(file);
@@ -81,7 +81,7 @@ public class TextIndexerByWord extends TextIndexer{
      * structure, printing in the screen the most relevant
      * files to the search.
      * Input:
-     * String[] search: user input line of words.
+     *     - String[] search: user input line of words.
      */
     public static void word_finder(String[] search) {
         System.out.println("----------------------------");
@@ -95,11 +95,7 @@ public class TextIndexerByWord extends TextIndexer{
                 if (entry.getKey().equals(word)) {
                     found = true;
                     for (String file : entry.getValue()) {
-                        if (words_found.containsKey(file)) {
-                            words_found.put(file, 1.00 + words_found.get(file));
-                        } else {
-                            words_found.put(file, 1.00);
-                        }
+                        TextIndexer.increase_position(file, words_found);
                     }
                 }
             }
