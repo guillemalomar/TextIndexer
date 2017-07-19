@@ -1,11 +1,15 @@
-/***********************************************
- *    Title: Words Search Application           *
- *    Author: Guillem Nicolau Alomar Sitjes     *
- *    Date: June 17th, 2017                     *
- *    Code version: 0.1                         *
- *    Availability: Public                      *
- ***********************************************/
+/*
+ *    Title: Words Search Application
+ *    Author: Guillem Nicolau Alomar Sitjes
+ *    Date: June 18th, 2017
+ *    Code version: 0.1
+ *    Availability: Public
+ */
 package textindexer;
+
+import textindexer.Indexers.TextIndexer;
+import textindexer.Indexers.TextIndexerByFile;
+import textindexer.Indexers.TextIndexerByWord;
 
 import java.util.*;
 import java.io.*;
@@ -15,7 +19,6 @@ import java.util.logging.Level;
 public class IndexingApp {
 
     private static String mode = "0";
-    private final static Timer timer = new Timer();
     private final static Logger LOGGER = Logger.getLogger(IndexingApp.class.getName());
 
     /**
@@ -40,32 +43,40 @@ public class IndexingApp {
             exitCondition(line);
             ready = check_mode(line);
         }
-        System.out.println("----------------------------");
-        System.out.println("Indexing files...");
-        timer.startTime();
-        final File indexableDirectory = new File(folder_path);
-        File[] listOfFiles = indexableDirectory.listFiles();
+        final File toIndexDirectory = new File(folder_path);
+        File[] listOfFiles = toIndexDirectory.listFiles();
         LOGGER.info("Number of files found: " + listOfFiles.length);
-        if (mode.equals("1")) {
-            textindexer.TextIndexer.text_indexer_by_file(listOfFiles, folder_path);
-        } else {
-            textindexer.TextIndexer.text_indexer_by_word(listOfFiles, folder_path);
+        switch (mode) {
+            case "1":
+                TextIndexerByFile.text_indexer_by_file(listOfFiles, folder_path);
+                break;
+            case "2":
+                TextIndexerByWord.text_indexer_by_word(listOfFiles, folder_path);
+                break;
+            case "3":
+                TextIndexerByFile.text_indexer_by_file(listOfFiles, folder_path);
+                TextIndexerByWord.text_indexer_by_word(listOfFiles, folder_path);
+                break;
         }
-        timer.finishTime();
-        System.out.println("Done in " + timer.getTime() + "s!");
-        System.out.println("----------------------------");
 
         Scanner keyboard = new Scanner(System.in);
         while (true) {
             System.out.print("search> ");
             final String line = keyboard.nextLine();
             exitCondition(line);
-            timer.startTime();
-            String[] search = textindexer.TextIndexer.splitLine(line);
-            textindexer.TextIndexer.word_finder(search, mode);
-            timer.finishTime();
-            System.out.println("Done in " + timer.getTime() + "s!");
-            System.out.println("----------------------------");
+            String[] search = TextIndexer.splitLine(line);
+            switch (mode) {
+                case "1":
+                    TextIndexerByFile.word_finder(search);
+                    break;
+                case "2":
+                    TextIndexerByWord.word_finder(search);
+                    break;
+                case "3":
+                    TextIndexerByWord.word_finder(search);
+                    TextIndexerByFile.word_finder(search);
+                    break;
+            }
         }
     }
 
@@ -87,7 +98,7 @@ public class IndexingApp {
         System.out.println("This application lets you search for specific words in all files in");
         System.out.println("a given directory, showing the file/files where most of the words");
         System.out.println("can be found (in case that the words are found).\nWrite ':quit' to exit.");
-        System.out.println("First, choose and indexing method:\n1)Index by file\n2)Index by word");
+        System.out.println("First, choose and indexing method:\n1)Index by file\n2)Index by word\n3)Index by both files and word");
     }
 
     /**
@@ -112,7 +123,7 @@ public class IndexingApp {
      * boolean: true if valid / false if not
      */
     private static boolean check_mode(String line) {
-        if (line.equals("1") || line.equals("2")) {
+        if (line.equals("1") || line.equals("2") || line.equals("3")) {
             mode = line;
             return true;
         } else {

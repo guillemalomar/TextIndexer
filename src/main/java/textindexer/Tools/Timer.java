@@ -1,13 +1,11 @@
-/***********************************************
-*    Title: Words Search Application           *
-*    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: July 14th, 2017                     *
-*    Code version: 0.1                         *
-*    Availability: Public                      *
-***********************************************/
-package textindexer;
-
-import java.util.*;
+/*
+ *    Title: Words Search Application
+ *    Author: Guillem Nicolau Alomar Sitjes
+ *    Date: June 18th, 2017
+ *    Code version: 0.1
+ *    Availability: Public
+ */
+package textindexer.Tools;
 
 public class Timer {
 
@@ -17,14 +15,14 @@ public class Timer {
     /**
      * Saves the starting timer
      */
-    static void startTime(){
+    public static void startTime(){
         startTime = System.currentTimeMillis();
     }
 
     /**
      * Saves the finish timer
      */
-    static void finishTime(){
+    private static void finishTime(){
         stopTime = System.currentTimeMillis();
     }
 
@@ -33,8 +31,14 @@ public class Timer {
      * Output:
      *    long : elapsed time between start and finish in seconds
      */
-    static double getTime(){
+    private static double getTime(){
         long elapsedTime = stopTime - startTime;
-        return (double)elapsedTime / (double)1000.0;
+        return (double)elapsedTime / 1000.0;
+    }
+
+    public static void totalTime(){
+        finishTime();
+        System.out.println("Done in " + getTime() + "s!");
+        System.out.println("----------------------------");
     }
 }
