@@ -30,12 +30,19 @@ public class TextIndexer {
         return line.split(";|,|\\:|-|\\.|\\ ");
     }
 
-
-    static void increase_position(String file, HashMap<String, Double> words_found){
-        if (words_found.containsKey(file)) {
-            words_found.put(file, 1.00 + words_found.get(file));
+    /**
+     * The increase_position checks if a key already has been stored in the words_found
+     * map, and then increases the value by one (if yes) or sets it to 1 (if no).
+     * Input:
+     *     - String key: position that needs to be increased.
+     *     - HashMap<String, Double> words_found: map with the current num of words
+     *     found per file.
+     */
+    static void increase_position(String key, HashMap<String, Double> words_found){
+        if (words_found.containsKey(key)) {
+            words_found.put(key, 1.00 + words_found.get(key));
         } else {
-            words_found.put(file, 1.00);
+            words_found.put(key, 1.00);
         }
     }
 

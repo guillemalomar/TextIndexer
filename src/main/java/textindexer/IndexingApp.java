@@ -30,7 +30,7 @@ public class IndexingApp {
         String folder_path;
         if (args.length == 0) {
             LOGGER.info("Using default indexable files directory: IndexableDirectory");
-            folder_path = System.getProperty("user.dir") + "/IndexableDirectory";
+            folder_path = System.getProperty("user.dir") + "/IndexableDirectory/smallsets";
         } else {
             LOGGER.info("Using specified indexable files directory: " + args[0]);
             folder_path = System.getProperty("user.dir") + "/" + args[0];
