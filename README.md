@@ -14,12 +14,16 @@ each file.
 
 Currently, there are two available indexing modes to choose:
 *    A) Indexing by file
+     - Data is stored in a "file: words in file" shape
 *    B) Indexing by word
+     - Data is stored in a "word: files where it appears" shape
+*    C) Indexing by file and Indexing by word
 
 Several tests will be done in order to obtain some performance
 data to evaluate them. I guess that the proportion
 WordsRange/NumFiles will be the main way to choose between them.
-We'll see.
+Some performance results have already been taken and can be seen
+in the PerformanceTests folder.
 
 It has been tested with +1.25GB of data.
 For a bigger dataset, it might give memory problems. In this
