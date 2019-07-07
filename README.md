@@ -1,6 +1,6 @@
-# TextIndexer
+# Text Indexer
 
-*    Title: Words Search Application          
+*    Title: Text Indexer        
 *    Author: Guillem Nicolau Alomar Sitjes      
 *    Initial release: June 16th, 2017                     
 *    Code version: 0.1                         
