@@ -44,9 +44,9 @@ Currently, there are two available indexing modes to choose:
 
 The mode can be passed as a parameter when executing the application. 
 
-![alt text][logo2]
+![alt text][logo3]
 
-[logo2]: https://github.com/guillemalomar/TextIndexer/blob/master/Documentation/ExecutionExample.png?raw=true "Folders and Files"
+[logo3]: https://github.com/guillemalomar/TextIndexer/blob/master/Documentation/ExecutionExample.png?raw=true "Folders and Files"
 
 ## Notes
 
